@@ -1,4 +1,5 @@
 ﻿using SpotifyApi.Interfaces;
+using System.Net.Http.Headers;
 
 namespace SpotifyApi.Services
 {
@@ -11,10 +12,17 @@ namespace SpotifyApi.Services
             _httpClient = httpClient;
         }
 
-        public Task GetPlaylist(string playlistId)
+        public async Task<string> GetPlaylist(string accessToken, string playlistId)
         {
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "");
-            var respone = _httpClient.GetAsync(playlistId);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            var response = await _httpClient.GetAsync(_httpClient.BaseAddress + playlistId);
+
+            response.EnsureSuccessStatusCode();
+
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            return responseBody;
         }
     }
 }
