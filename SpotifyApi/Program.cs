@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddRazorPages();
 
 builder.Services.AddHttpClient<IOAuthClientService, OAuthClientService>(httpClient =>
 {
@@ -24,6 +25,8 @@ builder.Services.AddHttpClient<ISpotifyPlaylistService, SpotifyPlaylistService>(
     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 });
 
+builder.Services.AddHttpClient();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,6 +36,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseRouting();
 
@@ -40,8 +44,8 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllerRoute(name: "default", pattern: "{controller=Spotify}/{action=Hello}");
     endpoints.MapControllers();
+    endpoints.MapRazorPages();
 });
 
 app.Run();
