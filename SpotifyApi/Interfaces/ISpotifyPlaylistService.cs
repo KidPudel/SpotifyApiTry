@@ -1,4 +1,6 @@
-﻿namespace SpotifyApi.Interfaces
+﻿using SpotifyApi.Models;
+
+namespace SpotifyApi.Interfaces
 {
     public interface ISpotifyPlaylistService
     {
@@ -8,6 +10,6 @@
         /// <param name="accessToken"></param>
         /// <param name="playlistId"></param>
         /// <returns></returns>
-        Task<string> GetPlaylist(string accessToken, string playlistId);
+        Task<PlaylistModel> GetPlaylist(string accessToken, string playlistId);
     }
 }
