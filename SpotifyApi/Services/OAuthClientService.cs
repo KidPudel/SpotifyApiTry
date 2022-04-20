@@ -46,8 +46,8 @@ namespace SpotifyApi.Services
             // get response
             var response = await _httpClient.SendAsync(request);
 
+            // ensure there is no error accured
             response.EnsureSuccessStatusCode();
-    
 
             // get response body as string
             var responseBody = await response.Content.ReadAsStringAsync();
